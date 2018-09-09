@@ -46,8 +46,7 @@ try {
   $stat->bindValue(':college',$_SESSION['college']);
   $stat->bindValue(':subject',$_SESSION['subject']);
   $stat->bindValue(':hobby',$_SESSION['hobby']);
-  $stat->execute();
-
+  // $stat->execute();
   if (!($stat->execute())) {
     echo "eor";
   }
