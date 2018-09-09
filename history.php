@@ -1,4 +1,6 @@
 <?php
+
+// エラーチェック & PDO情報
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
 
@@ -6,29 +8,132 @@ $dsn = 'mysql:dbname=Sunseer_BBS; host=localhost; charset=utf8';
 $user = 'masa';
 $passwd = 'masa';
 
+// 検索オプション設定
+
+if (isset($_POST["retreve"])) {
+
+  $name = $_POST['name'];
+  $sex = $_POST['sex'];
+  $college = $_POST['college'];
+  $phone = $_POST['phone'];
+
+
+  try {
+    $db = new PDO($dsn, $user, $passwd);
+    echo "接続完了<br>";
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stat = $db->prepare("SELECT * FROM db_BBS WHERE name1=$name AND sex=$sex AND college=$college AND phone=$phone");
+    unset($name);
+    unset($sex);
+    unset($college);
+    unset($phone);
+    unset($_POST['retreve']);
+    ?>
+
+
+
+  } catch (\PDOException $e) {
+  echo "エラー:$e->getMessage()";
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// PDO設定 for get hisotry
+
+
 try {
     $db = new PDO($dsn, $user, $passwd);
     echo "接続完了<br>";
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stat = $db->query("SELECT * FROM db_BBS");
-    // print_r($stat->fetchAll(PDO::FETCH_ASSOC));
-    foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
+    $stat = $db->prepare("SELECT * FROM db_BBS");
  ?>
 
     <!DOCTYPE html>
     <html lang="ja">
+
     <head>
       <meta charset="utf-8">
       <title>DB</title>
     </head>
+
     <body>
       <h1>db_BBS</h1>
       <p>↓↓↓↓</p>
+
         <table border="1">
           <thead ><th colspan="10">db_BBS</th></thead>
+
           <tbody>
+
+        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+            <tr>
+          <td>
+            <label for="name">
+              <b>姓名:</b>
+            </label>
+              <input type="name" name="name" id="name" value="">
+          </td>
+
+          <td>
+          <b>性別</b>
+          <br>
+            <label for="male">
+              <b>男</b>
+            </label>
+            <input type="radio" name="sex" id="male"  value="男">
+          <br>
+            <label for="female">
+              <b>女</b>
+            </label>
+              <input type="radio" name="sex" id="female" value="女">
+          </td>
+
+          <td>
+            <label for="college">
+            <b>学校名:</b>
+          </label>
+            <input type="text" name="college" id="college" value="">
+          </td>
+
+          <td>
+            <label for="phone">
+            <b>電話番号</b>
+          </label>
+            <input type="text" size="20" id="phone" name="phone" value="" maxlength="15">
+          </td>
+
+          <td>
+            <label for="retrive">
+              <b>検索</b>
+            </label>
+            <input type="submit" id="retrive" value="検索">
+          </td>
+
+          <td>
+            <label for="reset">
+              <b>リセット</b>
+            </label>
+            <input type="reset" id="reset" value="リセット">
+          </td>
+        </tr>
+      </form>
+
+
+
+
             <tr>
               <td>id</td>
               <td>name1</td>
@@ -41,6 +146,13 @@ try {
               <td>subject</td>
               <td>hobby</td>
             </tr>
+<?php
+
+$stat->execute();
+// print_r($stat->fetchAll(PDO::FETCH_ASSOC));
+foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
+
+ ?>
 
             <tr>
               <td>
