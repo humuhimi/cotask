@@ -102,6 +102,7 @@ $passwd = 'masa';
 
 
             <tr>
+              <!-- <td>icon</td> -->
               <td>id</td>
               <td>name1</td>
               <td>name2</td>
@@ -196,11 +197,12 @@ try {
 
 
         <table border="1" width='100%'>
-          <thead ><th colspan="11">↑検索結果↑</th></thead>
+          <thead ><th colspan="12">↑検索結果↑</th></thead>
 
           <tbody>
 
             <tr>
+              <!-- <td>icon</td> -->
               <td>id</td>
               <td>name1</td>
               <td>name2</td>
@@ -211,7 +213,8 @@ try {
               <td>college</td>
               <td>subject</td>
               <td>hobby</td>
-              <td>option</td>
+              <td>option1</td>
+              <td>option2</td>
             </tr>
 <?php
 $stat->execute();
@@ -253,17 +256,31 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
               <!--DBの編集機能と削除機能を追加する  -->
               <td>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+
               <label for="delete">
                 <b>削除</b>
               </label>
               <input type="hidden" name="id" value="<?php echo $row['id']?>" >
               <input type="submit" name="delete" id="delete" value="削除">
+
               <br>
               <label for="edit">
                 <b>編集</b>
               </label>
              <input type="hidden" name="id" value="<?php echo $row['id']?>" >
               <input type="submit" name="edit" id="edit" value="編集">
+            </form>
+          </td>
+
+          <td>
+          <form action="uploader.php" method="POST" enctype="multipart/form-data">
+
+              <label for="image">
+                <b>画像アップロード</b>
+              </label>
+             <input type="hidden" name="id" value="<?php echo $row['id']?>" >
+              <input type="file" accept="image/*" name="image" id="image">
+              <input type="submit" name="upload" id="upload" value="画像アップロード">
             </form>
           </td>
             </tr>
