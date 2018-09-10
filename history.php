@@ -18,7 +18,7 @@ $passwd = 'masa';
     echo "接続完了<br>";
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $stat = $db->prepare("SELECT * FROM db_BBS WHERE name1='$name' OR sex='$sex' OR phone='$phone' OR college='$college' ");
-    print_r($stat);
+
     unset($name);
     unset($sex);
     unset($college);
@@ -150,12 +150,16 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
               <td>
                 <?php echo $row['hobby']; ?>
               </td>
+
             </tr>
 
 
 <?php
 endforeach;
-reset($row);
+if (isset($row)) {
+  reset($row);
+}
+
 // ここまでが検索結果の出力
 // 以下がその場合の例外処理
   } catch (\PDOException $e) {
@@ -164,19 +168,35 @@ reset($row);
 
 // ここからは検索ではなく、全体を表示するためのもの
 
+
+
 // PDO設定 for get hisotry
 try {
     // $db = new PDO($dsn, $user, $passwd);
     echo "接続完了<br>";
+  $id =$_POST['id'];
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $stat = $db->prepare("SELECT * FROM db_BBS");
+// 削除昨日
+    if (isset($_POST['delete'])) {
+
+      $del = $db->prepare("DELETE FROM db_BBS WHERE id='$id'" );
+     $del->execute();
+    }
+// 編集機能
+    // if (isset($_POST['edit'])) {
+    //
+      // $edit = $db->prepare("UPDATE db_BBS SET *=''  WHERE id='$id'" );
+    //   $edit->execute();
+    // }
+
  ?>
 
 
 
         <table border="1" width='100%'>
-          <thead ><th colspan="10">↑検索結果↑</th></thead>
+          <thead ><th colspan="11">↑検索結果↑</th></thead>
 
           <tbody>
 
@@ -191,6 +211,7 @@ try {
               <td>college</td>
               <td>subject</td>
               <td>hobby</td>
+              <td>option</td>
             </tr>
 <?php
 $stat->execute();
@@ -229,7 +250,24 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
               <td>
                 <?php echo $row['hobby']; ?>
               </td>
+              <!--DBの編集機能と削除機能を追加する  -->
+              <td>
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+              <label for="delete">
+                <b>削除</b>
+              </label>
+              <input type="hidden" name="id" value="<?php echo $row['id']?>" >
+              <input type="submit" name="delete" id="delete" value="削除">
+              <br>
+              <label for="edit">
+                <b>編集</b>
+              </label>
+             <input type="hidden" name="id" value="<?php echo $row['id']?>" >
+              <input type="submit" name="edit" id="edit" value="編集">
+            </form>
+          </td>
             </tr>
+
 
 <?php
 endforeach;
