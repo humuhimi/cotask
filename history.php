@@ -2,6 +2,12 @@
 // エラーチェック & PDO情報
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
+
+
+
+
+
+
 $dsn = 'mysql:dbname=Sunseer_BBS; host=localhost; charset=utf8';
 $user = 'masa';
 $passwd = 'masa';
@@ -286,6 +292,7 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
                 <b>画像アップロード</b>
               </label>
              <input type="hidden" name="id" value="<?php echo $row['id']?>" >
+             <input type="hidden" name="MAX_SIZE" value="<?php echo MAX_SIZE ?>" >
               <input type="file" accept="image/*" name="image" id="image">
               <input type="submit" name="upload" id="upload" value="画像アップロード">
             </form>

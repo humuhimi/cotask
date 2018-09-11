@@ -5,14 +5,52 @@ $dsn = 'mysql:dbname=Sunseer_BBS; host=localhost; charset=utf8';
 $user = 'masa';
 $passwd = 'masa';
 
+define("MAX_SIZE",1*1024*1024);
+define("THUMBNAIL_WIDTH",400);
 define("IMAGES_DIR",__DIR__."/Image");
+define("THUMBNAIL_DIR",__DIR__."/Thumbs");
 
+
+echo THUMBNAIL_WIDTH;
 
 $id = $_POST['id'];
 $image = $_FILES['image']['name'];
 $up_err = $_FILES['image']['error'];
 $src = $_FILES['image']['tmp_name'];
+$type = $_FILES['image']['type'];
 $dir = "Image/".$image;
+$image_size = getimagesize($_FILES['image']['tmp_name']);
+
+
+
+if ($_FILES['image']['size']<MAX_SIZE){
+  $image_width = $image_size[0];
+  $image_height = $image_size[1];
+
+// THUMBNAIL_WITDH →Use of undefined constant THUMBNAIL_WITDH - assumed 'THUMBNAIL_WITDH' (this will throw an Error in a future version of PHP)
+  if ($image_width > 400 ) {
+    $thumbwidth = 400;
+    $thumbheight = round($image_height * 400/$image_width);
+    $thumbImage = imagecreatetruecolor(400,$thumbheight);
+    imagecopyresampled($thumbImage,$src,0,0,0,0,$thumbwidth,$thumbheight,$image_width,$image_height);
+    switch($type){
+    case IMAGETYPE_GIF;
+   imagegif($thumbImage,THUMBNAIL_DIR.'/'.$image);
+   // ファイルの出力
+    case IMAGETYPE_PNG;
+    imagepng($thumbImage,THUMBNAIL_DIR.'/'.$image);
+    case IMAGETYPE_JPEG;
+    imagejpeg($thumbImage,THUMBNAIL_DIR.'/'.$image);
+    //
+    break;
+    default:
+    echo "判別できません";
+    break;
+  }
+  }
+}else {
+echo "画像ファイルのサイズが大きすぎます";
+}
 
 var_dump($_FILES);
 // print __DIR__;
