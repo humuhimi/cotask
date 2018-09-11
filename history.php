@@ -102,7 +102,7 @@ $passwd = 'masa';
 
 
             <tr>
-              <!-- <td>icon</td> -->
+              <td>icon</td>
               <td>id</td>
               <td>name1</td>
               <td>name2</td>
@@ -121,6 +121,9 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
  ?>
 
             <tr>
+              <td>
+            <img alt="icon" src="  <?php echo $row['icon']; ?>">
+              </td>
               <td>
                 <?php echo $row['id']; ?>
               </td>
@@ -202,7 +205,7 @@ try {
           <tbody>
 
             <tr>
-              <!-- <td>icon</td> -->
+              <td>icon</td>
               <td>id</td>
               <td>name1</td>
               <td>name2</td>
@@ -223,6 +226,10 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
  ?>
 
             <tr>
+              <td>
+            <img alt="icon" src="  <?php echo $row['icon']; ?>">
+
+              </td>
               <td>
                 <?php echo $row['id']; ?>
               </td>
@@ -292,3 +299,7 @@ endforeach;
         echo "エラー:$e->getMessage()";
     }
  ?>
+
+ <?php
+
+  ?>
