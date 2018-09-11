@@ -128,7 +128,7 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
 
             <tr>
               <td>
-            <img alt="icon" src="  <?php echo $row['icon']; ?>">
+            <img alt="icon" src="<?php echo $row['icon']; ?>">
               </td>
               <td>
                 <?php echo $row['id']; ?>
