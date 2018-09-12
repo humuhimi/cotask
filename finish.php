@@ -15,8 +15,6 @@ print  $_SESSION['college'];
 print  $_SESSION['subject'];
 print  $_SESSION['hobby'];
 }
-
-
 if (isset($_POST['confirm'])) {
   $dsn = 'mysql:dbname=Sunseer_BBS; host=localhost; charset=utf8';
   $user = 'masa';

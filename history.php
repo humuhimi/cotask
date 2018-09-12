@@ -14,10 +14,10 @@ $passwd = 'masa';
 // 検索オプション設定
 // if検索なら
 // if (isset($_POST["retreve"])) {
-  $name = $_POST['name'];
-  $sex = $_POST['sex'];
-  $college = $_POST['college'];
-  $phone = $_POST['phone'];
+  @$name = $_POST['name'];
+  @$sex = $_POST['sex'];
+  @$college = $_POST['college'];
+  @$phone = $_POST['phone'];
 
   try {
     $db = new PDO($dsn, $user, $passwd);
@@ -45,7 +45,7 @@ $passwd = 'masa';
       <p>↓↓↓↓</p>
 
         <table border="1" width="100%">
-          <thead ><th colspan="10">db_BBS</th></thead>
+          <thead ><th colspan="13">db_BBS</th></thead>
 
           <tbody>
 
@@ -95,7 +95,7 @@ $passwd = 'masa';
             <input type="submit" id="retrive" value="検索">
           </td>
 
-          <td colspan="3" >
+          <td colspan="4" >
             <label for="reset">
               <b>リセット</b>
             </label>
@@ -184,7 +184,7 @@ if (isset($row)) {
 try {
     // $db = new PDO($dsn, $user, $passwd);
     echo "接続完了<br>";
-  $id =$_POST['id'];
+  @$id =$_POST['id'];
 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $stat = $db->prepare("SELECT * FROM db_BBS");
@@ -206,7 +206,7 @@ try {
 
 
         <table border="1" width='100%'>
-          <thead ><th colspan="12">↑検索結果↑</th></thead>
+          <thead ><th colspan="13">↑検索機能↑</th></thead>
 
           <tbody>
 

@@ -17,7 +17,7 @@ define("MAX_SIZE",1*1024*1024);
 define("THUMBNAIL_WIDTH",400);
 define("IMAGES_DIR",__DIR__."/Image");
 define("THUMBNAIL_DIR",__DIR__."/Thumbs".'/'.$image);
-// TODO:他のTHUMBNAIL_DIRも変更して
+
 
 
 echo THUMBNAIL_DIR;
@@ -101,7 +101,6 @@ if ($up_err == UPLOAD_ERR_OK) {
     } catch (\PDOException $e) {
       print $e->getMessage();
     }
-// :TODO
 }else{
     echo "アップロード処理に失敗しました";
 }

@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="utf-8">
   <title>BBS</title>
 </head>
+
 <body>
+
   <h1>BBS</h1>
   <p>hello</p>
+
   <form  action="confirm.php" method="POST">
     <table border="1">
-      <thead ><th colspan="2">登録</th></thead>
 
+      <thead ><th colspan="2">登録</th></thead>
       <tbody>
 
+<!--漢字  -->
         <tr>
         <td>お名前(全角)</td>
         <td>
@@ -20,7 +25,6 @@
           <b>姓:</b>
         </label>
           <input type="name" id="firstname" name="firstname" value="">
-
           <b>例:アース</b>
           <label for="lastname">
           <b>名:</b>
@@ -30,7 +34,7 @@
       </td>
         </tr>
 
-
+<!--ふりがな  -->
         <tr>
         <td>ふりがな(全角)</td>
         <td>
@@ -47,7 +51,7 @@
       </td>
         </tr>
 
-
+<!--性別  -->
         <tr>
         <td>性別</td>
         <td>
@@ -62,7 +66,7 @@
         </td>
         </tr>
 
-
+<!--生年月日  -->
         <tr>
         <td>生年月日(半角)</td>
         <td>
@@ -75,7 +79,7 @@
       </td>
         </tr>
 
-
+<!--メアド  -->
         <tr>
         <td>連絡可能なメールアドレス(半角)</td>
         <td>
@@ -84,7 +88,7 @@
          </td>
         </tr>
 
-
+<!-- メアド確認 -->
         <tr>
         <td>確認入力</td>
         <td>
@@ -92,9 +96,9 @@
          </td>
         </tr>
 
-
+<!--電話番号  -->
         <tr>
-        <td>連絡可能な電話番号</td>
+        <td>連絡可能な電話番号(携帯)</td>
         <td>
           <input type="text" size="20" name="phone" value="" maxlength="15">
           <b>例:</b>
@@ -102,7 +106,7 @@
        </td>
         </tr>
 
-
+<!--学歴  -->
         <tr>
         <td>最終学歴</td>
         <td>
@@ -120,7 +124,7 @@
        </td>
         </tr>
 
-
+<!--特技  -->
         <tr>
         <td>特技</td>
         <td>
@@ -128,7 +132,7 @@
         </td>
         </tr>
 
-
+<!--確認,リセット  -->
         <tr>
         <td>確認-リセット</td>
         <td align="center">
@@ -136,12 +140,9 @@
           <input type="reset">
         </td>
         </tr>
-
 </tbody>
 </table>
 </form>
-
-
 
 </body>
 </html>
