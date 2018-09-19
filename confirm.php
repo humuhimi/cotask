@@ -8,7 +8,9 @@ Check_and_Post();
 
 mk_session();
 
-// var_dump($_POST);
+var_dump($_POST);
+var_dump($_SESSION);
+// session_destroy();
 ?>
 
 <!DOCTYPE html>
