@@ -45,6 +45,15 @@ function mk_session(){
   $_SESSION['hobby']=$_POST['hobby'];
 }
 
+function Red_check(){
+
+
+
+
+
+
+}
+
 
 
  ?>

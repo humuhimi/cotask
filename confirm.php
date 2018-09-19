@@ -7,6 +7,8 @@ Err();
 Check_and_Post();
 
 mk_session();
+
+// var_dump($_POST);
 ?>
 
 <!DOCTYPE html>

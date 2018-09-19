@@ -1,24 +1,24 @@
 <?php
 // エラーチェック & PDO情報
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
+require_once "help.php";
+require_once "dbset.php";
+
+Err();
+$db = new DBset();
+
+$db->connect();
 
 
-
-
-
-
-$dsn = 'mysql:dbname=Sunseer_BBS; host=localhost; charset=utf8';
-$user = 'masa';
-$passwd = 'masa';
 // 検索オプション設定
 // if検索なら
 // if (isset($_POST["retreve"])) {
+// REVIEW 下の情報を綺麗にまとめる
   @$name = $_POST['name'];
   @$sex = $_POST['sex'];
   @$college = $_POST['college'];
   @$phone = $_POST['phone'];
 
+// TODO 下をクラスから呼び出す　dbー＞select
   try {
     $db = new PDO($dsn, $user, $passwd);
     echo "接続完了<br>";
@@ -121,8 +121,11 @@ $passwd = 'masa';
               <td>hobby</td>
             </tr>
 <?php
+
 $stat->execute();
 // print_r($stat->fetchAll(PDO::FETCH_ASSOC));
+
+//TODO select->show
 foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
  ?>
 
@@ -167,6 +170,7 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
 <?php
 endforeach;
 if (isset($row)) {
+  // TODO db->fin_db()
   reset($row);
 }
 
@@ -181,6 +185,7 @@ if (isset($row)) {
 
 
 // PDO設定 for get hisotry
+// TODO db->select()
 try {
     // $db = new PDO($dsn, $user, $passwd);
     echo "接続完了<br>";
@@ -190,7 +195,7 @@ try {
     $stat = $db->prepare("SELECT * FROM db_BBS");
 // 削除昨日
     if (isset($_POST['delete'])) {
-
+    // TODO $db->delete()
       $del = $db->prepare("DELETE FROM db_BBS WHERE id='$id'" );
      $del->execute();
     }
