@@ -1,4 +1,7 @@
-<?php if ($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/finish.php"):?>
+
+<?php if (($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/finish.php")
+  || ($_SERVER['HTTP_REFERER'] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/history.php" ))
+  :?>
 
 <?php
 // エラーチェック & PDO情報
@@ -46,9 +49,41 @@ $passwd = 'masa';
         border-collapse:collapse;
       }
       input { font-weight: bold; }
-
-
       </style>
+      <script type="text/javascript">
+
+      function edit_confirm(){
+
+      	if(window.confirm('編集してよろしいですか？')){ // 確認ダイアログを表示
+
+      		return true; // 「OK」時は送信を実行
+
+      	}
+      	else{ // 「キャンセル」時の処理
+
+      		window.alert('キャンセルされました'); // 警告ダイアログを表示
+      		return false; // 送信を中止
+      	}
+
+      }
+</script>
+      <script type="text/javascript">
+
+      function delete_confirm(){
+
+      	if(window.confirm('削除してよろしいですか？')){ // 確認ダイアログを表示
+
+      		return true; // 「OK」時は送信を実行
+
+      	}
+      	else{ // 「キャンセル」時の処理
+
+      		window.alert('キャンセルされました'); // 警告ダイアログを表示
+      		return false; // 送信を中止
+      	}
+
+      }
+</script>
     </head>
 
     <body>
@@ -102,13 +137,13 @@ $passwd = 'masa';
           <td colspan="2" padding="0">
             <label for="retrive">
             </label>
-            <input type="submit" id="retrive" style="border:0;padding:0;background-color:bisque;width:100px;height:70px" value="検索">
+            <input type="submit" id="retrive" style="border:0;padding:0;background-color:bisque;width:100%;height:70px" value="検索">
           </td>
 
           <td colspan="4" >
             <label for="reset">
             </label>
-            <input type="reset" id="reset" style="border:0;padding:0;background-color:lavender;width:350px;height:70px" value="リセット">
+            <input type="reset" id="reset" style="border:0;padding:0;background-color:lavender;width:100%;height:70px" value="リセット">
           </td>
         </tr>
       </form>
@@ -137,7 +172,7 @@ $stat->execute();
 //TODO select->show
 foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
  ?>
-
+<!-- TODO mail と phoneを -->
             <tr>
               <td>
             <img alt="icon" src="<?php echo $row['icon']; ?>">
@@ -158,10 +193,22 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
                 <?php echo $row['birth']; ?>
               </td>
               <td>
-                <?php echo $row['mail']; ?>
+                <?php
+
+                $mailh = substr($row['mail'][0],0,1);
+                // メールの頭
+                $mailm = substr($row['mail'],1);
+                $mailc = explode("@",$mailm);
+                $mailc[0] = "xxxxxx@";
+
+                echo $mailh.$mailc[0].$mailc[1];
+
+                ?>
               </td>
               <td>
-                <?php echo $row['phone']; ?>
+                <?php
+             echo  preg_replace('/([0-9]{4})-([0-9]{4})/',"xxxx-xxxx",$row['phone']);
+                 ?>
               </td>
               <td>
                 <?php echo $row['college']; ?>
@@ -204,17 +251,17 @@ try {
     $stat = $db->prepare("SELECT * FROM db_BBS");
 // 削除昨日
     if (isset($_POST['delete'])) {
-    // TODO $db->delete()
+
       $del = $db->prepare("DELETE FROM db_BBS WHERE id='$id'" );
      $del->execute();
     }
 // 編集機能
     // if (isset($_POST['edit'])) {
     //
-      // $edit = $db->prepare("UPDATE db_BBS SET *=''  WHERE id='$id'" );
+    //   $edit = $db->prepare("UPDATE db_BBS SET =''  WHERE id='$id'" );
     //   $edit->execute();
     // }
-
+// TODO 編集ページどうするか考える
  ?>
 
 
@@ -266,10 +313,45 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
                 <?php echo $row['birth']; ?>
               </td>
               <td>
-                <?php echo $row['mail']; ?>
+                <?php
+              // $mailhead = ;
+              // var_dump($mailhead);
+
+              // $mailh = array_splice($mailhead,0,1,"xxxxxxxxx");
+              // var_dump( $mailh);
+
+
+              // preg_replace_callback("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/",function(){
+              //
+              //
+              //
+              // },$row["mail"]);
+              //
+              $mailh = substr($row['mail'][0],0,1);
+              // メールの頭
+              $mailm = substr($row['mail'],1);
+              $mailc = explode("@",$mailm);
+              $mailc[0] = "xxxxxx@";
+
+              echo $mailh.$mailc[0].$mailc[1];
+
+              // $mail = array_merge($mailh,$mailc[0],$mail[1]);
+
+
+              // echo implode($mail);
+
+
+              // var_dump($mailm);
+              // $mail= str_replace($row['mail'][0],$mailhead."xxxxx",$row["mail"]);
+              // var_dump($mail);
+              // echo $mail;
+                // echo $row['mail'];
+                ?>
               </td>
               <td>
-                <?php echo $row['phone']; ?>
+                <?php
+                 echo  preg_replace('/([0-9]{4})-([0-9]{4})/',"xxxx-xxxx",$row['phone']);
+                 ?>
               </td>
               <td>
                 <?php echo $row['college']; ?>
@@ -286,11 +368,11 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
               <input type="hidden" name="id" value="<?php echo $row['id']?>" >
-              <input type="submit" name="delete" id="delete" style="border:0;padding:0;background-color:tomato;width:100px;height:70px" value="削除">
+              <input type="submit" name="delete" id="delete" onclick="return delete_confirm()" style="border:0;padding:0;background-color:tomato;width:100px;height:70px" value="削除">
               <br>
               <hr text="1">
              <input type="hidden" name="id" value="<?php echo $row['id']?>" >
-              <input type="submit" name="edit" id="edit" style="border:0;padding:0;background-color:dodgerblue;width:100px;height:70px" value="編集">
+              <input type="submit" name="edit" id="edit" onclick="return edit_confirm()" style="border:0;padding:0;background-color:dodgerblue;width:100px;height:70px" value="編集">
             </form>
           </td>
 

@@ -13,6 +13,7 @@ echo $return;
   echo $_POST['mail']."は間違ったメールアドレスです<br>";
   echo $return;
 
+  exit();
 }else {
   echo "チェック完了";
   return array(
@@ -33,7 +34,11 @@ echo $return;
 // セッションに必須な要素
 function mk_session(){
 
-  session_start();
+
+  $_SESSION['firstname']=$_POST['firstname'];
+  $_SESSION['lastname']=$_POST['lastname'];
+  $_SESSION['firstname2']=$_POST['firstname2'];
+  $_SESSION['lastname2']=$_POST['lastname2'];
   $_SESSION['name1']=$_POST['firstname'].$_POST['lastname'];
   $_SESSION['name2']= $_POST['firstname2'].$_POST['lastname2'];
   $_SESSION['sex']=$_POST['sex'];
@@ -45,14 +50,6 @@ function mk_session(){
   $_SESSION['hobby']=$_POST['hobby'];
 }
 
-function Red_check(){
-
-
-
-
-
-
-}
 
 
 

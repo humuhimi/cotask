@@ -1,4 +1,4 @@
-<?php if ($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/confirm.php"):?>
+<?php if ($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/input.php"):?>
 
 
 <?php
@@ -6,13 +6,13 @@ require_once "help_confirm.php";
 include_once "help.php";
 
 Err();
+mk_session();
 
 Check_and_Post();
 
-mk_session();
 
 var_dump($_POST);
-var_dump($_SESSION);
+
 // session_destroy();
 ?>
 
