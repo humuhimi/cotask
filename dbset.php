@@ -43,7 +43,7 @@ public function connect(){
     var_dump($this->dsn,$this->user,$this->passwd);
     $db = new PDO($this->dsn,$this->user,$this->passwd);
     $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    echo "connect完了";
+    echo "connect完了<br>";
     return $db;
    } catch (\PDOException $e) {
     echo "connectエラー:{$e->getMessage()}";
@@ -58,7 +58,7 @@ public function select(){
     // var_dump($db);
     $stat =  $db->prepare("SELECT * FROM db_BBS");
     $stat->execute();
-    echo "select成功";
+    echo "select完了";
 
     foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $column => $data){
       $column = h($column);
@@ -74,6 +74,23 @@ SHOW;
   } catch (\PDOException $es) {
     echo "selectエラー：{$es->getMessage()}";
   }
+}
+//TODO retrieve用のfuncを作る
+public function retrieve($name,$sex,$college,$phone){
+
+  $db = $this->connect();
+
+  $stat = $db->prepare("SELECT * FROM db_BBS WHERE name ='$name' AND sex = '$sex' AND college = '$college' AND phone ='$phone'");
+  $stat->execute();
+  if ($stat->execute() == true) {
+
+
+}else{
+  unset($db);
+  $db = $this->connect();
+
+  $stat = $db->prepare("SELECT * FROM db_BBS WHERE name1='$name' OR sex='$sex' OR phone='$phone' OR college='$college' ");
+}
 }
 
 
@@ -97,9 +114,9 @@ public function insert(){
     $stat->bindValue(':hobby',$this->hobby);
     $stat->bindValue(':icon',"Image/icon.05.42.png");
     $stat->execute();
-    echo "insert完了";
+    echo "insert完了<br>";
 
-       // echo "<br>insert完了";}else{
+       // echo "<br>insert完了<br>";}else{
        //   echo "エラー";
        // }
     // $stat->execute();
@@ -118,7 +135,7 @@ public function update(){
    $stat = $db->prepare("UPDATE db_BBS SET ???=??? FROM db_BBS WHERE id='$id'");
    // TODO SET間の処理をする
    $stat->execute();
-   echo "update完了";
+   echo "update完了<br>";
  } catch (\PDOException $eu) {
     echo "updateエラー:{$eu->getMessage()}";
   }

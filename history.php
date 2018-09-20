@@ -1,13 +1,15 @@
+<?php if ($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/finish.php"):?>
+
 <?php
 // エラーチェック & PDO情報
 require_once "help.php";
 require_once "dbset.php";
 
 Err();
-$db = new DBset();
 
-$db->connect();
-
+$dsn = 'mysql:dbname=Sunseer_BBS; host=localhost; charset=utf8';
+$user = 'masa';
+$passwd = 'masa';
 
 // 検索オプション設定
 // if検索なら
@@ -20,9 +22,10 @@ $db->connect();
 
 // TODO 下をクラスから呼び出す　dbー＞select
   try {
-    $db = new PDO($dsn, $user, $passwd);
-    echo "接続完了<br>";
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db = new PDO($dsn,$user,$passwd);
+    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    echo "connect完了<br>";
+
     $stat = $db->prepare("SELECT * FROM db_BBS WHERE name1='$name' OR sex='$sex' OR phone='$phone' OR college='$college' ");
 
     unset($name);
@@ -38,6 +41,14 @@ $db->connect();
     <head>
       <meta charset="utf-8">
       <title>DB</title>
+      <style>
+      table{
+        border-collapse:collapse;
+      }
+      input { font-weight: bold; }
+
+
+      </style>
     </head>
 
     <body>
@@ -88,18 +99,16 @@ $db->connect();
             <input type="text" size="20" id="phone" name="phone" value="" maxlength="15">
           </td>
 
-          <td colspan="2">
+          <td colspan="2" padding="0">
             <label for="retrive">
-              <b>検索</b>
             </label>
-            <input type="submit" id="retrive" value="検索">
+            <input type="submit" id="retrive" style="border:0;padding:0;background-color:bisque;width:100px;height:70px" value="検索">
           </td>
 
           <td colspan="4" >
             <label for="reset">
-              <b>リセット</b>
             </label>
-            <input type="reset" id="reset" value="リセット">
+            <input type="reset" id="reset" style="border:0;padding:0;background-color:lavender;width:350px;height:70px" value="リセット">
           </td>
         </tr>
       </form>
@@ -272,34 +281,27 @@ foreach ($stat->fetchAll(PDO::FETCH_ASSOC) as $row):
                 <?php echo $row['hobby']; ?>
               </td>
               <!--DBの編集機能と削除機能を追加する  -->
+
               <td>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
-              <label for="delete">
-                <b>削除</b>
-              </label>
               <input type="hidden" name="id" value="<?php echo $row['id']?>" >
-              <input type="submit" name="delete" id="delete" value="削除">
-
+              <input type="submit" name="delete" id="delete" style="border:0;padding:0;background-color:tomato;width:100px;height:70px" value="削除">
               <br>
-              <label for="edit">
-                <b>編集</b>
-              </label>
+              <hr text="1">
              <input type="hidden" name="id" value="<?php echo $row['id']?>" >
-              <input type="submit" name="edit" id="edit" value="編集">
+              <input type="submit" name="edit" id="edit" style="border:0;padding:0;background-color:dodgerblue;width:100px;height:70px" value="編集">
             </form>
           </td>
 
           <td>
           <form action="uploader.php" method="POST" enctype="multipart/form-data">
 
-              <label for="image">
-                <b>画像アップロード</b>
-              </label>
              <input type="hidden" name="id" value="<?php echo $row['id']?>" >
              <input type="hidden" name="MAX_SIZE" value="<?php echo MAX_SIZE ?>" >
-              <input type="file" accept="image/*" name="image" id="image">
-              <input type="submit" name="upload" id="upload" value="画像アップロード">
+              <input type="file" accept="image/*" name="image" style="border:0;padding:0;background-color:honeydew;width:230px;height:70px" id="image" value="画像を選ぶ">
+              <hr size="1">
+              <input type="submit" name="upload" id="upload" style="border:0;padding:0;background-color:palegreen;width:230px;height:70px" value="アップロード">
             </form>
           </td>
             </tr>
@@ -311,7 +313,9 @@ endforeach;
         echo "エラー:$e->getMessage()";
     }
  ?>
-
- <?php
-
-  ?>
+ <!-- 正規でない方法による処理 -->
+<?php else: ?>
+<h3>あなたは正規の方法でこのウェブサイトにアクセスしていません。</h3>
+<br>
+<a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
+<?php endif ;?>

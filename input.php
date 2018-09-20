@@ -13,7 +13,6 @@ echo "<br>";
 var_dump($_POST);
 // session_destroy();
 
-// REVIEW 普通にerror いらないんで
 
 
 // if($_POST){
@@ -103,6 +102,9 @@ echo "ああああ";
   <title>BBS</title>
   <style>
   .error {color:red;}
+  table{
+    border-collapse:collapse;
+  }
   </style>
   <style>
 
@@ -140,9 +142,9 @@ if(
 
  <?php  endif;?>
 
-    <table border="1">
+    <table border="1" >
 
-      <thead ><th colspan="2">登録</th></thead>
+      <thead ><th colspan="2">個人情報登録</th></thead>
       <tbody>
 
 <!--漢字  -->
@@ -206,7 +208,7 @@ if(
         </tr>
 
 <!--生年月日  -->
-<!--TODO sessionを保持するようにする  -->
+<!-- sessionを保持するようにする  -->
         <tr>
 
         <td>

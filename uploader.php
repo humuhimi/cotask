@@ -1,3 +1,7 @@
+<?php if ($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/uploader.php"):?>
+
+
+
 <?php
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
@@ -138,3 +142,9 @@ var_dump($_FILES);
   echo $thumb_db;
   echo " <a href=".$_SERVER['HTTP_REFERER'].">前に戻る</a>" ;
   ?>
+  <!--正規でない場合  -->
+<?php else: ?>
+<h3>あなたは正規の方法でこのウェブサイトにアクセスしていません。</h3>
+<br>
+<a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
+<?php endif ;?>

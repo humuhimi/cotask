@@ -1,3 +1,6 @@
+<?php if ($_SERVER["HTTP_REFERER"] == "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER['PHP_SELF'])."/confirm.php"):?>
+
+
 <?php
 require_once "help_confirm.php";
 include_once "help.php";
@@ -19,6 +22,11 @@ var_dump($_SESSION);
 <head>
   <meta charset="utf-8">
   <title>BBS</title>
+  <style>
+  table{
+    border-collapse:collapse;
+  }
+  </style>
 </head>
 
 <body>
@@ -26,7 +34,7 @@ var_dump($_SESSION);
   <h1>Confirm</h1>
   <form  action="finish.php" method="POST">
     <table border="1">
-      <thead ><th colspan="2">登録</th></thead>
+      <thead ><th colspan="2">個人情報</th></thead>
 
       <tbody>
 
@@ -43,7 +51,7 @@ var_dump($_SESSION);
             <td>$data</td>
             </tr>
 TEXT;
-// XXX indenterror may cause
+//  indenterror may cause
 }}
 
 ?>
@@ -61,3 +69,9 @@ TEXT;
 </form>
 </body>
 </html>
+<!-- 正規でない場合 -->
+<?php else: ?>
+<h3>あなたは正規の方法でこのウェブサイトにアクセスしていません。</h3>
+<br>
+<a href="#" onclick="javascript:window.history.back(-1);return false;">戻る</a>
+<?php endif ;?>
