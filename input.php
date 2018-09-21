@@ -151,7 +151,7 @@ if(
         <label for="firstname">
           <b>姓:</b>
         </label>
-          <input type="name" id="firstname" name="firstname" maxlength="20" value="<?php print @$_SESSION['firstname'] ?>">
+          <input type="name" id="firstname" name="firstname" maxlength="20" value="<?php  print @$_SESSION['firstname'] ?>">
           <?php if((@$_POST["firstname"] == "") && (@@$_POST["submit"] == "確認")): ?>
             <p class="error" color="red">姓を入力してください</p>
           <?php endif;?>
@@ -165,6 +165,42 @@ if(
           <?php endif;?>
       </td>
         </tr>
+
+<!--下の形に近ずけていく  -->
+        <!-- <?php if((@$_POST["lastname"] == "")&& (isset($_POST["submit"]))){
+          $error["lastname"] = '  <p class="error" color="red">名を入力してください</p>';
+        }?> -->
+        <?php if((@$_POST["lastname"] == "") && (@@$_POST["submit"] == "確認")): ?>
+          <p class="error" color="red">名を入力してください</p>
+        <?php endif;?>
+
+            <input width="136.31"　type="name" id="lastname" name="lastname" maxlength="20" value="$_SESSION['lastname']">
+            <!--REVIEW 赤色を入れたい   -->
+            <!-- <?php
+            if (isset($_SESSION["lastname"])) {
+              echo $_SESSION["lastname"];
+            }else {
+              echo $error["lastname"];
+            }
+// ________________________________________________________________________________
+
+<?php if((@$_POST["lastname"] == "") && (@$_POST["submit"] == "確認") && ($_SESSION["lastname"] != "error")): ?>
+ <input width="136.31"　type="name" id="lastname" name="lastname" maxlength="20" value="$_SESSION['lastname']">
+<?php elseif ((@$_SESSION["lastname"] == "error") && (@$_POST["submit"] == "確認")) :?>
+<input width="136.31"　type="name" style="color:red"  name="lastname" maxlength="20" value="名を入力してください">
+<?php else : ?>
+<?php $_SESSION['lastname'] = 'error'; ?>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+             ?> -->
+
 
 <!--ふりがな  -->
         <tr>
